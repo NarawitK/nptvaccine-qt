@@ -1,0 +1,25 @@
+{
+    "type":[
+        "บุคลากรทางการแพทย์",
+        "เจ้าหน้าที่ที่เกี่ยวข้องกับการควบคุมโรคโควิด 19 ที่มีโอกาสสัมผัสผู้ป่วย",
+        "ผู้มีอายุ 60 ปีขึ้นไป",
+        "บุคคลที่มีโรคประจำตัว",
+        "หญิงตั้งครรภ์",
+        "ประชาชนทั่วไป"
+    ],
+    "sub_type": {
+        "บุคลากรทางการแพทย์": ["บุคลากรทางการแพทย์และสาธารณสุขภาครัฐ", "อาสาสมัครสาธารณสุขประจำหมู่บ้าน (อสม.)/ อาสาสมัครสาธารณสุขต่างด้าว (อสต.)"],
+        "ประชาชนทั่วไป": ["ประชาชนทั่วไป", "นักเรียน อายุ 12-17 ปี"]
+    },
+    "min_dose": 1,
+    "max_dose": 4,
+    "vaccine_alias": {
+        "ChAdOx1nCov-19(บริษัทAstraZeneca) [AstraZeneca]": "AZ",
+        "Corona Vac (บริษัทSinovac) [Sinovac Life Sciences]": "SV",
+        "Cov-19 Pfizer (บริษัทBioNTech) [Pfizer, BioNTech]": "PZ",
+        "Cov-19 Sinopharm [Sinopharm]": "SP",
+        "Moderna [Moderna]": "MD"
+    },
+    "npt_url" : "https://docs.google.com/spreadsheets/d/1L5zHBL5YpbnGAoXEgzGcFW8kJx856N0n0k0_ARpdcMU/edit#gid=54268681"
+    
+}
