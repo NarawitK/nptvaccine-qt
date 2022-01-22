@@ -67,10 +67,10 @@ class FinvacWidget(QtWidgets.QWidget):
         self.pool.start(worker)
 
     def process_file(self, inPath, outPath):
-        oob = FinancialFilter(inPath)
-        oob.filter_date()
-        #oob.prepare_filtered_date_sheets()
-        #oob.write_to_excel(outPath)
+        instance = FinancialFilter(inPath)
+        instance.filter_date()
+        instance.prepare_filtered_date_sheets()
+        instance.write_to_excel(outPath)
 
     @QtCore.Slot(str)
     def finished_reading(self,msg):

@@ -4,5 +4,5 @@ Include/
 Lib/
 Scripts/
 upx/
-pyenv.cfg
 *__pycache__/
+pyvenv.cfg

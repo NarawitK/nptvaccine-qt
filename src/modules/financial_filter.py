@@ -21,9 +21,10 @@ class FinancialFilter:
 
     def filter_date(self):
         if('immunization_datetime' in self.__dataframe.columns):
+            self.__dataframe = self.__dataframe.sort_values(by=['immunization_datetime'])
             self.__dataframe['immunization_date'] = self.__dataframe['immunization_datetime'].astype('datetime64[ns]').dt.date
             self.__dates = self.__dataframe["immunization_date"].drop_duplicates().to_list()
-        else:        
+        else:
             raise Exception("ไฟล์ไม่ถูกต้อง ตรวจสอบไฟล์ต้นฉบับว่าใส่มาถูกหรือเปล่า")
 
     def prepare_filtered_date_sheets(self):
