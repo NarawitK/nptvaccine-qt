@@ -16,7 +16,7 @@ class DailyFilterWidget(QtWidgets.QWidget):
         self.pool = QtCore.QThreadPool()
         self.__started_filtering_text = "Reading. . ."
         self.__finished_filtering_text = "กด Ctrl+Shift+V ที่ Cell ที่ต้องการวางข้อมูลใน G. Sheet NPTVaccine"
-        self.__error_filtering_text = "Error ถ่ายรูปเก็บไว้แจ้งก็ดีนะ: "
+        self.__error_filtering_text = "Error: "
         
     def render_component(self):
         self.layout = QtWidgets.QVBoxLayout()
@@ -65,7 +65,7 @@ class DailyFilterWidget(QtWidgets.QWidget):
             self.run_button.setEnabled(False)
             self.start_worker(self.file_path)
         else:
-            self.status_textfield.setText("No file path yet.")
+            self.status_textfield.setText("ยังไม่ได้เลือกไฟล์ต้นฉบับ")
 
     @QtCore.Slot()
     def on_web_button_clicked(self):
@@ -73,7 +73,7 @@ class DailyFilterWidget(QtWidgets.QWidget):
             url = helper.read_config()['npt_url']
             webbrowser.open(url)
         except:
-            self.status_textfield.setText("คอมคุณไม่มี Browser งั้นหรือ หืม ??")
+            self.status_textfield.setText("ไม่มี Browser ติดตั้งบนคอมพิวเตอร์")
     
     @QtCore.Slot(str)
     def start_worker(self, filepath):
@@ -86,6 +86,7 @@ class DailyFilterWidget(QtWidgets.QWidget):
     def readSheet(self, filePath):
         instance = DailyFilter()
         instance.readSpreadSheet(filePath)
+        instance.checkdatecount()
         instance.prepareData()
         df = instance.export_df_for_npt()
         table_df = instance.export_tabular_df()

@@ -21,6 +21,18 @@ class DailyFilter():
         except:
             raise Exception('Something going on about your file')
 
+    def checkdatecount(self):
+        dataframe = self.__df
+        dataframe['immunization_date'] = dataframe['immunization_datetime'].astype('datetime64[ns]').dt.date
+        date_count = len(dataframe['immunization_date'].drop_duplicates())
+        print(date_count)
+        if(date_count == 1):
+            return True
+        elif(date_count > 1):
+            raise Exception("ในไฟล์ต้นฉบับมีวันที่ฉีดมากกว่า 1 วัน")
+        else:
+            raise Exception("ในไฟล์ต้นฉบับไม่มีวันที่ฉีดเลย")
+
     def prepareData(self):
         filter_list = helper.read_config()
         self.__min_dose = filter_list['min_dose']

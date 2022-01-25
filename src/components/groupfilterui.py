@@ -15,14 +15,14 @@ class VaccineGroupingSummary(QtWidgets.QWidget):
         self.pool = QtCore.QThreadPool()
         self.__started_filtering_text = "Reading. . ."
         self.__finished_filtering_text = "คลิกเลือก Cell(s) จากนั้นดูผลรวมในช่อง 'ผลรวม'"
-        self.__error_filtering_text = "Error ถ่ายรูปเก็บไว้แจ้งก็ดีนะ: "
+        self.__error_filtering_text = "Error: "
 
     def render_components(self):
         self.layout = QtWidgets.QVBoxLayout()
         self.filechooser = OpenSpreadSheetWidget()
         self.status_label = QtWidgets.QLabel("สถานะ")
         self.status_text = QtWidgets.QLineEdit()
-        self.status_text.setPlaceholderText("เลือกไฟล์ > Run > คลิก/ลากข้อมูลใน Cell ตาราง เพื่อดูผลรวม หรือจะไม่ดูก็ได้")
+        self.status_text.setPlaceholderText("เลือกไฟล์ > Run > คลิก/ลากข้อมูลใน Cell ตาราง เพื่ออ่านผลรวม")
         self.status_text.setReadOnly(True)
         self.run_button = QtWidgets.QPushButton("Run")
         self.run_button.setEnabled(False)
@@ -92,8 +92,6 @@ class VaccineGroupingSummary(QtWidgets.QWidget):
         '''
         rows = sorted(set(index.row() for index in self.tableview.selectedIndexes()))
         cols = sorted(set(index.column() for index in self.tableview.selectedIndexes()))
-        print(rows)
-        print(cols)
         for row in rows:
             for col in cols:
                 temp_sum = self.table_model.data(self.table_model.index(row, col))

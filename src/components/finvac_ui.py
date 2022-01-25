@@ -14,7 +14,7 @@ class FinvacWidget(QtWidgets.QWidget):
         self.__save_path = None
         self.__started_filtering_text = "Reading & Writing . . ."
         self.__finished_filtering_text = "Done"
-        self.__error_filtering_text = "Error ถ่ายรูปเก็บไว้แจ้งก็ดีนะ: "
+        self.__error_filtering_text = "Error: "
         self.render_components()
 
     def render_components(self):

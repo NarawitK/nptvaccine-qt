@@ -12,12 +12,12 @@ class FinancialFilter:
         try:
             self.__dataframe = pd.read_excel(filepath, dtype={'ref_hn': str})
         except FileNotFoundError:
-            raise Exception("ไม่เห็นมีไฟล์ที่นี่เลย: " + str(filepath))
+            raise Exception("ไม่พบไฟล์ที่นี่: " + str(filepath))
         except Exception:
             try:
                 self.__dataframe = pd.read_csv(filepath, dtype={'ref_hn': str})
             except Exception:
-                raise Exception("Cannot read this file as excel nor csv.")
+                raise Exception("ไม่สามารถอ่านไฟล์ได้ กรุณาตรวจสอบประเภทของไฟล์ว่าเป็น Excel หรือ CSV")
 
     def filter_date(self):
         if('immunization_datetime' in self.__dataframe.columns):
@@ -25,7 +25,7 @@ class FinancialFilter:
             self.__dataframe['immunization_date'] = self.__dataframe['immunization_datetime'].astype('datetime64[ns]').dt.date
             self.__dates = self.__dataframe["immunization_date"].drop_duplicates().to_list()
         else:
-            raise Exception("ไฟล์ไม่ถูกต้อง ตรวจสอบไฟล์ต้นฉบับว่าใส่มาถูกหรือเปล่า")
+            raise Exception("คอลัมน์ในไฟล์ไม่ถูกต้อง ตรวจสอบไฟล์ต้นฉบับว่าถูกหรือไม่")
 
     def prepare_filtered_date_sheets(self):
         for date in self.__dates:
