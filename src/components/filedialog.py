@@ -12,7 +12,7 @@ class OpenSpreadSheetWidget(QtWidgets.QWidget):
         self.filechooser_layout = QtWidgets.QHBoxLayout()
         self.path_textfield = QtWidgets.QLineEdit()
         self.path_textfield.setReadOnly(True)
-        self.browse_file_button = QtWidgets.QPushButton("Browse File")
+        self.browse_file_button = QtWidgets.QPushButton("&Browse File")
         self.browse_file_button.clicked.connect(self.on_browse_button_clicked)
 
         self.layout.addWidget(self.file_label)
@@ -45,7 +45,7 @@ class SaveSpreadsheetWidget(QtWidgets.QWidget):
         self.save_widget_layout = QtWidgets.QHBoxLayout()
         self.path_textfield = QtWidgets.QLineEdit()
         self.path_textfield.setReadOnly(True)
-        self.browse_file_button = QtWidgets.QPushButton("Browse File")
+        self.browse_file_button = QtWidgets.QPushButton("&Save As")
         self.browse_file_button.clicked.connect(self.on_browse_button_clicked)
 
         self.layout.addWidget(self.file_label)

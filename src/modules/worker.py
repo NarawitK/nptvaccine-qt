@@ -1,10 +1,11 @@
-import sys
-from PySide2.QtCore import QRunnable, QObject, Signal, Slot 
+from PySide2.QtCore import QRunnable, QObject, Signal, Slot
+
 
 class WorkerSignal(QObject):
     started = Signal(str)
     finished = Signal(str)
     error = Signal(str)
+
 
 class FilterWorker(QRunnable):
     def __init__(self, func, started_emit_arg = "", finished_emit_arg = "", error_emit_arg = "",  *args, **kwargs):
@@ -23,6 +24,6 @@ class FilterWorker(QRunnable):
             self.signals.started.emit(self.started_emit_arg)
             self.func(*self.args, **self.kwargs)
         except Exception as e:
-            self.signals.error.emit(self.error_emit_arg +"\n"+ str(e))
+            self.signals.error.emit(self.error_emit_arg + "\n" + str(e))
         else:
             self.signals.finished.emit(self.finished_emit_arg)
