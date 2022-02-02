@@ -3,6 +3,7 @@ dist/
 Include/
 Lib/
 Scripts/
+share/
 upx/
 *__pycache__/
 pyvenv.cfg

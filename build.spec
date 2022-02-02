@@ -5,7 +5,8 @@ block_cipher = None
 
 data_files = [
     #('src\\icon.ico','.'),
-    ('src\\config\\filter_config.json','config')
+    ('src\\config\\filter_config.json','config'),
+    ('src\\config\\person_type.json','config')    
 ]
 
 a = Analysis(['src\\main.py'],

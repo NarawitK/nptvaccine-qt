@@ -22,16 +22,16 @@ class FinvacWidget(QtWidgets.QWidget):
 
         self.__fileopener = OpenSpreadSheetWidget()
         self.__filesaver = SaveSpreadsheetWidget()
+        self.executeButton = QtWidgets.QPushButton("Conve&rt")
         self.status_label = QtWidgets.QLabel("สถานะ") 
-        self.executeButton = QtWidgets.QPushButton("เริ่มประมวลผลไฟล์")
         self.executeButton.setEnabled(False)
         self.status_text = QtWidgets.QTextEdit()
         self.status_text.setReadOnly(True)
 
         self.layout.addWidget(self.__fileopener)
         self.layout.addWidget(self.__filesaver)
-        self.layout.addWidget(self.status_label)
         self.layout.addWidget(self.executeButton)
+        self.layout.addWidget(self.status_label)
         self.layout.addWidget(self.status_text)
         self.__fileopener.fileChoose.connect(self.__setFilePath)
         self.__filesaver.saveLocationSelected.connect(self.__setSavePath)

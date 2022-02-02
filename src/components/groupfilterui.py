@@ -24,7 +24,7 @@ class VaccineGroupingSummary(QtWidgets.QWidget):
         self.status_text = QtWidgets.QLineEdit()
         self.status_text.setPlaceholderText("เลือกไฟล์ > Run > คลิก/ลากข้อมูลใน Cell ตาราง เพื่ออ่านผลรวม")
         self.status_text.setReadOnly(True)
-        self.run_button = QtWidgets.QPushButton("Run")
+        self.run_button = QtWidgets.QPushButton("&Run")
         self.run_button.setEnabled(False)
         self.sum_label = QtWidgets.QLabel("ผลรวม")
         self.sum_text = QtWidgets.QLineEdit('0')
