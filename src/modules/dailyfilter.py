@@ -65,7 +65,6 @@ class DailyFilter:
     def to_clipboard(self, dataframe):
         clipboard_df = pd.DataFrame(dataframe)
         clipboard_df.to_clipboard(index=False, header=False)
-        return "Result Copied To Clipboard. Ready to Paste to Excel"
 
     def export_df_for_npt(self):
         norm_set = [[]]
