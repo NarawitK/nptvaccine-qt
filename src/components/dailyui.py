@@ -26,6 +26,7 @@ class DailyFilterWidget(QtWidgets.QWidget):
         self.filechooser = OpenSpreadSheetWidget()
 
         #Runner Widgets
+        self.crc_checkbox = QtWidgets.QCheckBox('Check for Group &Error(s)')
         self.status_label = QtWidgets.QLabel("สถานะ")
         self.status_textfield = QtWidgets.QLineEdit()
         self.status_textfield.setReadOnly(True)
@@ -36,6 +37,7 @@ class DailyFilterWidget(QtWidgets.QWidget):
         self.tableview = QtWidgets.QTableView()
 
         self.layout.addWidget(self.filechooser)
+        self.layout.addWidget(self.crc_checkbox)
         self.layout.addWidget(self.status_label)
         self.layout.addWidget(self.status_textfield)
         self.layout.addWidget(self.run_button)
@@ -87,22 +89,25 @@ class DailyFilterWidget(QtWidgets.QWidget):
 
     def start_procedure(self, filePath):
         instance = DailyFilter(filePath)
-        errorcheck_result = self.__check_source_for_error(instance.get_dataframe())
-        if errorcheck_result is not None:
-            raise ValueError(errorcheck_result.exception_message)
-        else:
-            instance.prepareData()
-            df = instance.export_df_for_npt()
-            table_df = instance.export_tabular_df()
-            self.df = table_df
-            table_model = TableModel(table_df)     
-            self.dataready.emit(table_model)
-            instance.to_clipboard(df) 
+        if self.should_check_group_error():
+            group_error_checker = self.__check_source_for_error(instance.df)
+            if group_error_checker.has_error:
+                raise ValueError(group_error_checker.exception_message)
+        instance.prepareData()
+        df = instance.export_df_for_npt()
+        table_df = instance.export_tabular_df()
+        self.df = table_df
+        table_model = TableModel(table_df)     
+        self.dataready.emit(table_model)
+        instance.to_clipboard(df) 
+
+    def should_check_group_error(self):
+        return self.crc_checkbox.isChecked()
 
     def __check_source_for_error(self, source_df):
         checker_instance = DocuChecker(source_df)
-        if checker_instance.get_has_error():
-            error_df = checker_instance.get_error_details()
+        if checker_instance.has_error:
+            error_df = checker_instance.error_df
             error_count = error_df.shape[0]
             table_df = error_df
             group_error_model = TableModel(table_df)
@@ -111,7 +116,7 @@ class DailyFilterWidget(QtWidgets.QWidget):
             error_detail = GroupErrorModel(True, exception_string)
             return error_detail
         else:
-            return None
+            return GroupErrorModel(False, None)
 
     @QtCore.Slot(object)
     def setup_table_model(self, model):
@@ -154,4 +159,3 @@ class GroupErrorModel:
     @exception_message.setter
     def exception_message(self, msg):
         self.__exception_message = msg
-

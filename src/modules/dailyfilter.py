@@ -1,4 +1,3 @@
-import os
 import numpy as np
 from helper import helper
 import pandas as pd
@@ -11,22 +10,11 @@ class DailyFilter:
     __max_dose = 4
 
     def __init__(self, filepath):
-        self.readSpreadSheet(filepath)
-
-    def get_dataframe(self):
+        self.__df  = helper.read_spreadsheet(filepath)
+    
+    @property
+    def df(self):
         return self.__df
-
-    def readSpreadSheet(self, filepath):
-        try:
-            _, file_extension = os.path.splitext(filepath)
-            if (file_extension == '.xlsx' or file_extension == '.xls'):
-                self.__df = pd.read_excel(filepath)
-            elif (file_extension == '.csv'):
-                self.__df = pd.read_csv(filepath)
-            else:
-                raise Exception('Unknown File Extension')
-        except:
-            raise Exception('Something going on about your file')
 
     def checkdatecount(self):
         dataframe = self.__df
@@ -96,16 +84,17 @@ class DocuChecker:
         self.__error_df = None
         self.__has_error = self.__check_group_error(self.__df)
 
-    def get_has_error(self):
+    @property
+    def has_error(self):
         return self.__has_error
 
-    def get_error_details(self):
+    @property
+    def error_df(self):
         return self.__error_df
 
     def __check_group_error(self, df):
         # Index show as Excel Visible Row No.
         group_set = helper.read_group_list()
-        error_flag = False
         df.index = range(2, df.shape[0] + 2)
         filter_dataframe = df.loc[
             (self.__df['person_type_name'].isnull()) | (df['person_risk_type_name'].isnull()), ['cid',
@@ -118,15 +107,14 @@ class DocuChecker:
                                     & (~self.__df['person_risk_type_name'].isin(group_set['type'][group_name])),
                                     ['cid', 'ref_patient_name', 'person_type_name', 'person_risk_type_name']]
             if not person_type_df.empty:
-                error_flag = True
                 filter_dataframe = filter_dataframe.append(person_type_df)
 
         if filter_dataframe.empty:
-            return error_flag
+            return False
         else:
             temp_df = self.__generate_error_df_for_tablemodel(filter_dataframe)
             self.__error_df = temp_df.sort_index()
-            return error_flag
+            return True
 
     def __generate_error_df_for_tablemodel(self, df):
         return df.rename(columns={'cid': 'เลขบัตรประชาชน', 'ref_patient_name': 'ชื่อ-นามสกุล',
