@@ -1,23 +1,21 @@
-import webbrowser
-from helper import helper
 from PySide2 import QtCore, QtWidgets
 from components.filedialog import OpenSpreadSheetWidget
-from modules.dailyfilter import DailyFilter, DocuChecker
 from modules.worker import FilterWorker
+from model.grouperrormodel import GroupErrorModel
 from model.tablemodel import TableModel
+from modules.weeklyfilter import WeeklyFilter, WeeklyGroupChecker
 
-
-class DailyFilterWidget(QtWidgets.QWidget):
+class WeeklyFilterWidget(QtWidgets.QWidget):
     dataready = QtCore.Signal(object)
+
 
     def __init__(self):
         super().__init__()
-        self.df = None
         self.file_path = None
         self.render_component()
         self.pool = QtCore.QThreadPool()
         self.__started_filtering_text = "Reading. . ."
-        self.__finished_filtering_text = "กด Ctrl+Shift+V ที่ Cell ที่ต้องการวางข้อมูลใน G. Sheet NPTVaccine"
+        self.__finished_filtering_text = "Done"
         self.__error_filtering_text = "Error: "
         
     def render_component(self):
@@ -26,13 +24,12 @@ class DailyFilterWidget(QtWidgets.QWidget):
         self.filechooser = OpenSpreadSheetWidget()
 
         #Runner Widgets
-        self.crc_checkbox = QtWidgets.QCheckBox('Check for Group &Error(s)')
+        self.crc_checkbox = QtWidgets.QCheckBox("Check for Group &Error(s)")
         self.status_label = QtWidgets.QLabel("สถานะ")
         self.status_textfield = QtWidgets.QLineEdit()
         self.status_textfield.setReadOnly(True)
         self.run_button = QtWidgets.QPushButton("&Run")
         self.run_button.setEnabled(False)
-        self.web_button = QtWidgets.QPushButton("Go to NPTVaccine &Web")
         self.table_label = QtWidgets.QLabel("ตารางสรุปข้อมูล")
         self.tableview = QtWidgets.QTableView()
 
@@ -41,15 +38,13 @@ class DailyFilterWidget(QtWidgets.QWidget):
         self.layout.addWidget(self.status_label)
         self.layout.addWidget(self.status_textfield)
         self.layout.addWidget(self.run_button)
-        self.layout.addWidget(self.web_button)
         self.layout.addWidget(self.table_label)
         self.layout.addWidget(self.tableview)
 
         #Signal-Slot Connect
-        self.run_button.clicked.connect(self.on_run_button_clicked)
-        self.web_button.clicked.connect(self.on_web_button_clicked)
-        self.dataready.connect(self.setup_table_model)
         self.filechooser.fileChoose.connect(self.on_file_chosen)
+        self.run_button.clicked.connect(self.on_run_button_clicked)
+        self.dataready.connect(self.setup_table_model)
 
         self.setLayout(self.layout)
 
@@ -70,14 +65,6 @@ class DailyFilterWidget(QtWidgets.QWidget):
             self.start_worker(self.file_path)
         else:
             self.status_textfield.setText("ยังไม่ได้เลือกไฟล์ต้นฉบับ")
-
-    @QtCore.Slot()
-    def on_web_button_clicked(self):
-        try:
-            url = helper.read_config()['npt_url']
-            webbrowser.open(url)
-        except:
-            self.status_textfield.setText("ไม่มี Browser ติดตั้งบนคอมพิวเตอร์")
     
     @QtCore.Slot(str)
     def start_worker(self, filepath):
@@ -86,38 +73,7 @@ class DailyFilterWidget(QtWidgets.QWidget):
         worker.signals.finished.connect(self.finished_reading)
         worker.signals.error.connect(self.on_finish_with_error)
         self.pool.start(worker)
-
-    def start_procedure(self, filePath):
-        instance = DailyFilter(filePath)
-        if self.should_check_group_error():
-            group_error_checker = self.__check_source_for_error(instance.df)
-            if group_error_checker.has_error:
-                raise ValueError(group_error_checker.exception_message)
-        instance.prepareData()
-        df = instance.export_df_for_npt()
-        table_df = instance.export_tabular_df()
-        self.df = table_df
-        table_model = TableModel(table_df)     
-        self.dataready.emit(table_model)
-        instance.to_clipboard(df) 
-
-    def should_check_group_error(self):
-        return self.crc_checkbox.isChecked()
-
-    def __check_source_for_error(self, source_df):
-        checker_instance = DocuChecker(source_df)
-        if checker_instance.has_error:
-            error_df = checker_instance.error_df
-            error_count = error_df.shape[0]
-            table_df = error_df
-            group_error_model = TableModel(table_df)
-            self.dataready.emit(group_error_model)
-            exception_string = 'พบข้อผิดพลาดที่กลุ่มเป้าหมาย จำนวน ' + str(error_count) + ' รายการ '
-            error_detail = GroupErrorModel(True, exception_string)
-            return error_detail
-        else:
-            return GroupErrorModel(False, None)
-
+    
     @QtCore.Slot(object)
     def setup_table_model(self, model):
         self.tableview.setModel(model)
@@ -134,28 +90,32 @@ class DailyFilterWidget(QtWidgets.QWidget):
         self.status_textfield.setText(message)
         self.run_button.setEnabled(True)
 
+    def start_procedure(self, filePath):
+        instance = WeeklyFilter(filePath)
+        if self.should_check_group_error():
+            group_error_checker = self.__check_source_for_error(instance.df)
+            if group_error_checker.has_error:
+                raise ValueError(group_error_checker.exception_message)
 
-class GroupErrorModel:
-    def __init__(self):
-        self.__has_error = None
-        self.__exception_message = None
+        df, rowlist = instance.group_filter(instance.df)
+        instance.to_clipboard(rowlist)
+        table_model = TableModel(df)
+        self.dataready.emit(table_model)
 
-    def __init__(self, has_error, exception_message):
-        self.__has_error = has_error
-        self.__exception_message = exception_message
+    def should_check_group_error(self):
+        return self.crc_checkbox.isChecked()
 
-    @property
-    def has_error(self):
-        return self.__has_error
-
-    @property
-    def exception_message(self):
-        return self.__exception_message
-
-    @has_error.setter
-    def has_error(self, value):
-        self.__has_error = value
-
-    @exception_message.setter
-    def exception_message(self, msg):
-        self.__exception_message = msg
+    def __check_source_for_error(self, source_df):
+        checker_instance = WeeklyGroupChecker(source_df)
+        if checker_instance.has_error:
+            error_df = checker_instance.error_df
+            error_count = error_df.shape[0]
+            table_df = error_df
+            group_error_model = TableModel(table_df)
+            self.dataready.emit(group_error_model)
+            exception_string = 'พบข้อผิดพลาดที่กลุ่มเป้าหมาย จำนวน ' + str(error_count) + ' รายการ '
+            error_detail = GroupErrorModel(True, exception_string)
+            return error_detail
+        else:
+            return GroupErrorModel(False, None)
+        

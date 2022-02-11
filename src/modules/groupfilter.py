@@ -1,4 +1,3 @@
-import os
 import pandas as pd
 from helper import helper
 
@@ -12,19 +11,7 @@ class GroupFilter():
     def __init__(self, filepath):
         self.__df = None
         self.__result_set = []
-        self.readSpreadSheet(filepath)
-
-    def readSpreadSheet(self, filepath):
-        try:
-            _, file_extension = os.path.splitext(filepath)
-            if(file_extension == '.xlsx' or file_extension == '.xls'):
-                self.__df = pd.read_excel(filepath)
-            elif(file_extension == '.csv'):
-                self.__df = pd.read_csv(filepath)
-            else:
-                raise Exception('Unknown File Extension')
-        except:
-            raise Exception('Something going on about your file')
+        self.__df = helper.read_spreadsheet(filepath)
 
     def filter_vaccine_group(self):
         filter_list = helper.read_config()
