@@ -29,7 +29,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.tabs.addTab(self.__dailyfilter_screen, "NPT Daily Report")
         self.tabs.addTab(self.__vac_group_screen, "Separate Vaccine Report")
         self.tabs.addTab(self.__fin_vac_screen, "Financial Vac Report")
-        self.tabs.addTab(self.__weekly_group_screen, "Group Report")
+        self.tabs.addTab(self.__weekly_group_screen, "Weekly Group Report")
         self.__layout.addWidget(self.tabs)
 
 
