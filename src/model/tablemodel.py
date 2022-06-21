@@ -1,5 +1,6 @@
 from PySide2.QtCore import Qt, QAbstractTableModel
 
+
 class TableModel(QAbstractTableModel):
 
     def __init__(self, df):

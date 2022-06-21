@@ -7,3 +7,4 @@ share/
 upx/
 *__pycache__/
 pyvenv.cfg
+.idea/*

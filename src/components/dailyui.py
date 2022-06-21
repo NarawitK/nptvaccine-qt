@@ -21,7 +21,7 @@ class DailyFilterWidget(QtWidgets.QWidget):
         self.__error_filtering_text = "Error: "
         
     def render_component(self):
-        self.layout = QtWidgets.QVBoxLayout()
+        layout = QtWidgets.QVBoxLayout()
         #File Chooser Widget
         self.filechooser = OpenSpreadSheetWidget()
 
@@ -36,14 +36,14 @@ class DailyFilterWidget(QtWidgets.QWidget):
         self.table_label = QtWidgets.QLabel("ตารางสรุปข้อมูล")
         self.tableview = QtWidgets.QTableView()
 
-        self.layout.addWidget(self.filechooser)
-        self.layout.addWidget(self.crc_checkbox)
-        self.layout.addWidget(self.status_label)
-        self.layout.addWidget(self.status_textfield)
-        self.layout.addWidget(self.run_button)
-        self.layout.addWidget(self.web_button)
-        self.layout.addWidget(self.table_label)
-        self.layout.addWidget(self.tableview)
+        layout.addWidget(self.filechooser)
+        layout.addWidget(self.crc_checkbox)
+        layout.addWidget(self.status_label)
+        layout.addWidget(self.status_textfield)
+        layout.addWidget(self.run_button)
+        layout.addWidget(self.web_button)
+        layout.addWidget(self.table_label)
+        layout.addWidget(self.tableview)
 
         #Signal-Slot Connect
         self.run_button.clicked.connect(self.on_run_button_clicked)
@@ -51,7 +51,7 @@ class DailyFilterWidget(QtWidgets.QWidget):
         self.dataready.connect(self.setup_table_model)
         self.filechooser.fileChoose.connect(self.on_file_chosen)
 
-        self.setLayout(self.layout)
+        self.setLayout(layout)
 
     @QtCore.Slot(str, bool)
     def on_file_chosen(self, filepath, isFileChoosen):
