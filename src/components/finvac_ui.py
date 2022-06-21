@@ -18,7 +18,7 @@ class FinvacWidget(QtWidgets.QWidget):
         self.render_components()
 
     def render_components(self):
-        self.layout = QtWidgets.QVBoxLayout(self)
+        layout = QtWidgets.QVBoxLayout()
 
         self.__fileopener = OpenSpreadSheetWidget()
         self.__filesaver = SaveSpreadsheetWidget()
@@ -28,15 +28,15 @@ class FinvacWidget(QtWidgets.QWidget):
         self.status_text = QtWidgets.QTextEdit()
         self.status_text.setReadOnly(True)
 
-        self.layout.addWidget(self.__fileopener)
-        self.layout.addWidget(self.__filesaver)
-        self.layout.addWidget(self.executeButton)
-        self.layout.addWidget(self.status_label)
-        self.layout.addWidget(self.status_text)
+        layout.addWidget(self.__fileopener)
+        layout.addWidget(self.__filesaver)
+        layout.addWidget(self.executeButton)
+        layout.addWidget(self.status_label)
+        layout.addWidget(self.status_text)
         self.__fileopener.fileChoose.connect(self.__setFilePath)
         self.__filesaver.saveLocationSelected.connect(self.__setSavePath)
         self.executeButton.clicked.connect(self.beginGenerateExcel)
-        self.setLayout(self.layout)
+        self.setLayout(layout)
     
     @QtCore.Slot(str, bool)
     def __setFilePath(self, path, hasPathSet):

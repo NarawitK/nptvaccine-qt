@@ -5,6 +5,7 @@ from model.grouperrormodel import GroupErrorModel
 from model.tablemodel import TableModel
 from modules.weeklyfilter import WeeklyFilter, WeeklyGroupChecker
 
+
 class WeeklyFilterWidget(QtWidgets.QWidget):
     dataready = QtCore.Signal(object)
 
@@ -118,4 +119,3 @@ class WeeklyFilterWidget(QtWidgets.QWidget):
             return error_detail
         else:
             return GroupErrorModel(False, None)
-        

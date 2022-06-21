@@ -4,6 +4,7 @@ from modules.groupfilter import GroupFilter
 from model.tablemodel import TableModel
 from modules.worker import FilterWorker
 
+
 class VaccineGroupingSummary(QtWidgets.QWidget):
     begin_setup_datatable = QtCore.Signal(object)
 
