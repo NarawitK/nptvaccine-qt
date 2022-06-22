@@ -1,5 +1,6 @@
 import json
 import os
+import platform
 import pandas as pd
 
 
@@ -33,3 +34,6 @@ def read_weekly_config():
 
 def read_group_list():
     return read_json_file('../config/person_type.json')
+
+def read_os() -> dict:
+    return {'os_name': os.name, 'platform_release': platform.release()}

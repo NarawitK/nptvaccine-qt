@@ -17,16 +17,26 @@ class DailyFilterWidget(QtWidgets.QWidget):
         self.render_component()
         self.pool = QtCore.QThreadPool()
         self.__started_filtering_text = "Reading. . ."
-        self.__finished_filtering_text = "กด Ctrl+Shift+V ที่ Cell ที่ต้องการวางข้อมูลใน G. Sheet NPTVaccine"
+        self.__finished_filtering_text = ""
         self.__error_filtering_text = "Error: "
-        
+        self.__finished_filtering_text_by_os()
+
+
+    def __finished_filtering_text_by_os(self) -> str: 
+        os_dict = helper.read_os()
+        if os_dict['os_name'] == 'nt' and int(os_dict['platform_release']) < 10:
+            self.__finished_filtering_text = "กด Ctrl+Shift+V ที่ Cell ช่องแรกที่ต้องการวางข้อมูลใน Sheet"
+        else:
+            self.__finished_filtering_text = "กด Ctrl+V ที่ Cell ช่องแรกที่ต้องการวางข้อมูลใน Sheet"
+
+
     def render_component(self):
         self.layout = QtWidgets.QVBoxLayout()
         #File Chooser Widget
         self.filechooser = OpenSpreadSheetWidget()
 
         #Runner Widgets
-        self.crc_checkbox = QtWidgets.QCheckBox('Check for Group &Error(s)')
+        self.crc_checkbox = QtWidgets.QCheckBox('ตรวจสอบ &Error(s) ในกลุ่มเป้าหมาย')
         self.status_label = QtWidgets.QLabel("สถานะ")
         self.status_textfield = QtWidgets.QLineEdit()
         self.status_textfield.setReadOnly(True)

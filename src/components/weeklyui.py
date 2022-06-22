@@ -24,7 +24,7 @@ class WeeklyFilterWidget(QtWidgets.QWidget):
         self.filechooser = OpenSpreadSheetWidget()
 
         #Runner Widgets
-        self.crc_checkbox = QtWidgets.QCheckBox("Check for Group &Error(s)")
+        self.crc_checkbox = QtWidgets.QCheckBox("ตรวจสอบ &Error(s) ในกลุ่มเป้าหมาย")
         self.status_label = QtWidgets.QLabel("สถานะ")
         self.status_textfield = QtWidgets.QLineEdit()
         self.status_textfield.setReadOnly(True)
