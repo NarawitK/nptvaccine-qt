@@ -18,9 +18,9 @@ class FinvacWidget(QtWidgets.QWidget):
         self.render_components()
 
     def render_components(self):
-        layout = QtWidgets.QVBoxLayout()
+        self.layout = QtWidgets.QVBoxLayout(self)
 
-        self.__fileopener = OpenSpreadSheetWidget()
+        self.__fileopener = OpenSpreadSheetWidget("เลือกไฟล์วัคซีนรายวันจาก MOPH-IC")
         self.__filesaver = SaveSpreadsheetWidget()
         self.executeButton = QtWidgets.QPushButton("Conve&rt")
         self.status_label = QtWidgets.QLabel("สถานะ") 
@@ -28,15 +28,15 @@ class FinvacWidget(QtWidgets.QWidget):
         self.status_text = QtWidgets.QTextEdit()
         self.status_text.setReadOnly(True)
 
-        layout.addWidget(self.__fileopener)
-        layout.addWidget(self.__filesaver)
-        layout.addWidget(self.executeButton)
-        layout.addWidget(self.status_label)
-        layout.addWidget(self.status_text)
+        self.layout.addWidget(self.__fileopener)
+        self.layout.addWidget(self.__filesaver)
+        self.layout.addWidget(self.executeButton)
+        self.layout.addWidget(self.status_label)
+        self.layout.addWidget(self.status_text)
         self.__fileopener.fileChoose.connect(self.__setFilePath)
         self.__filesaver.saveLocationSelected.connect(self.__setSavePath)
         self.executeButton.clicked.connect(self.beginGenerateExcel)
-        self.setLayout(layout)
+        self.setLayout(self.layout)
     
     @QtCore.Slot(str, bool)
     def __setFilePath(self, path, hasPathSet):
@@ -73,7 +73,7 @@ class FinvacWidget(QtWidgets.QWidget):
         instance.write_to_excel(outPath)
 
     @QtCore.Slot(str)
-    def finished_reading(self,msg):
+    def finished_reading(self, msg):
         self.status_text.setText(msg)
         self.executeButton.setEnabled(True)
     

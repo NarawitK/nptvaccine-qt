@@ -5,10 +5,8 @@ from model.grouperrormodel import GroupErrorModel
 from model.tablemodel import TableModel
 from modules.weeklyfilter import WeeklyFilter, WeeklyGroupChecker
 
-
 class WeeklyFilterWidget(QtWidgets.QWidget):
     dataready = QtCore.Signal(object)
-
 
     def __init__(self):
         super().__init__()
@@ -22,7 +20,7 @@ class WeeklyFilterWidget(QtWidgets.QWidget):
     def render_component(self):
         self.layout = QtWidgets.QVBoxLayout()
         #File Chooser Widget
-        self.filechooser = OpenSpreadSheetWidget()
+        self.filechooser = OpenSpreadSheetWidget("เลือกไฟล์กลุ่มเป้าหมายวัคซีนที่ดาวน์โหลดจาก MOPH-IC")
 
         #Runner Widgets
         self.crc_checkbox = QtWidgets.QCheckBox("ตรวจสอบ &Error(s) ในกลุ่มเป้าหมาย")
@@ -119,3 +117,4 @@ class WeeklyFilterWidget(QtWidgets.QWidget):
             return error_detail
         else:
             return GroupErrorModel(False, None)
+        

@@ -1,3 +1,4 @@
+import numpy as np
 from helper import helper
 import pandas as pd
 
@@ -49,8 +50,7 @@ class DailyFilter:
                         self.__df[(self.__df['person_type_name'] == main_key) & (self.__df['vaccine_plan_no'] == dose)])
                     self.__result_set[main_key].append(count)
 
-    @staticmethod
-    def to_clipboard(dataframe):
+    def to_clipboard(self, dataframe):
         clipboard_df = pd.DataFrame(dataframe)
         clipboard_df.to_clipboard(index=False, header=False)
 
@@ -116,7 +116,7 @@ class DocuChecker:
             self.__error_df = temp_df.sort_index()
             return True
 
-    @staticmethod
-    def __generate_error_df_for_tablemodel(df):
+    def __generate_error_df_for_tablemodel(self, df):
         return df.rename(columns={'cid': 'เลขบัตรประชาชน', 'ref_patient_name': 'ชื่อ-นามสกุล',
-                                  'person_type_name': 'กลุ่มเป้าหมายหลัก', 'person_risk_type_name': 'กลุ่มเป้าหมายย่อย'})
+                                  'person_type_name': 'กลุ่มเป้าหมายหลัก',
+                                  'person_risk_type_name': 'กลุ่มเป้าหมายย่อย'})
