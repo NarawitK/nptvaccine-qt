@@ -4,7 +4,6 @@ from modules.groupfilter import GroupFilter
 from model.tablemodel import TableModel
 from modules.worker import FilterWorker
 
-
 class VaccineGroupingSummary(QtWidgets.QWidget):
     begin_setup_datatable = QtCore.Signal(object)
 
@@ -20,7 +19,7 @@ class VaccineGroupingSummary(QtWidgets.QWidget):
 
     def render_components(self):
         self.layout = QtWidgets.QVBoxLayout()
-        self.filechooser = OpenSpreadSheetWidget()
+        self.filechooser = OpenSpreadSheetWidget("เลือกไฟล์วัคซีนรายวันจาก MOPH-IC")
         self.status_label = QtWidgets.QLabel("สถานะ")
         self.status_text = QtWidgets.QLineEdit()
         self.status_text.setPlaceholderText("เลือกไฟล์ > Run > คลิก/ลากข้อมูลใน Cell ตาราง เพื่ออ่านผลรวม")

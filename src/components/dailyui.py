@@ -17,16 +17,26 @@ class DailyFilterWidget(QtWidgets.QWidget):
         self.render_component()
         self.pool = QtCore.QThreadPool()
         self.__started_filtering_text = "Reading. . ."
-        self.__finished_filtering_text = "กด Ctrl+Shift+V ที่ Cell ที่ต้องการวางข้อมูลใน G. Sheet NPTVaccine"
+        self.__finished_filtering_text = ""
         self.__error_filtering_text = "Error: "
-        
+        self.__finished_filtering_text_by_os()
+
+
+    def __finished_filtering_text_by_os(self) -> str: 
+        os_dict = helper.read_os()
+        if os_dict['os_name'] == 'nt' and int(os_dict['platform_release']) < 10:
+            self.__finished_filtering_text = "กด Ctrl+Shift+V ที่ Cell ช่องแรกที่ต้องการวางข้อมูลใน Sheet"
+        else:
+            self.__finished_filtering_text = "กด Ctrl+V ที่ Cell ช่องแรกที่ต้องการวางข้อมูลใน Sheet"
+
+
     def render_component(self):
-        layout = QtWidgets.QVBoxLayout()
+        self.layout = QtWidgets.QVBoxLayout()
         #File Chooser Widget
-        self.filechooser = OpenSpreadSheetWidget()
+        self.filechooser = OpenSpreadSheetWidget("เลือกไฟล์วัคซีนรายวันจาก MOPH-IC")
 
         #Runner Widgets
-        self.crc_checkbox = QtWidgets.QCheckBox('Check for Group &Error(s)')
+        self.crc_checkbox = QtWidgets.QCheckBox('ตรวจสอบ &Error(s) ในกลุ่มเป้าหมาย')
         self.status_label = QtWidgets.QLabel("สถานะ")
         self.status_textfield = QtWidgets.QLineEdit()
         self.status_textfield.setReadOnly(True)
@@ -36,14 +46,14 @@ class DailyFilterWidget(QtWidgets.QWidget):
         self.table_label = QtWidgets.QLabel("ตารางสรุปข้อมูล")
         self.tableview = QtWidgets.QTableView()
 
-        layout.addWidget(self.filechooser)
-        layout.addWidget(self.crc_checkbox)
-        layout.addWidget(self.status_label)
-        layout.addWidget(self.status_textfield)
-        layout.addWidget(self.run_button)
-        layout.addWidget(self.web_button)
-        layout.addWidget(self.table_label)
-        layout.addWidget(self.tableview)
+        self.layout.addWidget(self.filechooser)
+        self.layout.addWidget(self.crc_checkbox)
+        self.layout.addWidget(self.status_label)
+        self.layout.addWidget(self.status_textfield)
+        self.layout.addWidget(self.run_button)
+        self.layout.addWidget(self.web_button)
+        self.layout.addWidget(self.table_label)
+        self.layout.addWidget(self.tableview)
 
         #Signal-Slot Connect
         self.run_button.clicked.connect(self.on_run_button_clicked)
@@ -51,7 +61,7 @@ class DailyFilterWidget(QtWidgets.QWidget):
         self.dataready.connect(self.setup_table_model)
         self.filechooser.fileChoose.connect(self.on_file_chosen)
 
-        self.setLayout(layout)
+        self.setLayout(self.layout)
 
     @QtCore.Slot(str, bool)
     def on_file_chosen(self, filepath, isFileChoosen):
