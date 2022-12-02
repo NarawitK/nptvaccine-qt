@@ -28,7 +28,7 @@ class ForeignFilter:
             try:
                 return pd.read_csv(filepath, dtype={"cid": str, "cid_hash": str}, usecols=self.MOPH_IC_COLS_ARRAY)
             except Exception:
-                raise Exception("This file cannot as Excel or CSV")
+                raise Exception("This file cannot be opened as Excel or csv")
 
     def filter_address(self, df: pd.DataFrame, province_code: int = 73, district_code: int = 12,
                        prefecture_code: int = 2):

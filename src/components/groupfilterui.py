@@ -89,11 +89,3 @@ class VaccineGroupingSummary(QtWidgets.QWidget):
             cell_data = self.table_model.data(self.table_model.index(index.row(), index.column()))
             result += int(cell_data)
         self.sum_text.setText(str(result))
-        '''
-        rows = sorted(set(index.row() for index in self.tableview.selectedIndexes()))
-        cols = sorted(set(index.column() for index in self.tableview.selectedIndexes()))
-        for row in rows:
-            for col in cols:
-                temp_sum = self.table_model.data(self.table_model.index(row, col))
-                result += int(temp_sum)
-        '''
