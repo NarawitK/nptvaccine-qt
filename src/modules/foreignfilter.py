@@ -13,10 +13,11 @@ class ForeignFilter:
     def hosxp_df(self):
         return self.__hosxp_df
 
-    def __init__(self, moph_group_filepath: str):
+    def __init__(self, moph_group_filepath: str, filter_prefecture: bool = True):
         self.__hosxp_df = None
         self.__mophic_df = self.__spreadsheet_reader(moph_group_filepath)
-        self.__mophic_df = self.filter_address(self.__mophic_df)
+        if filter_prefecture:
+            self.__mophic_df = self.filter_address(self.__mophic_df)
         self.__mophic_df["cid"] = self.__fill_cid_leading_zeroes(self.__mophic_df)
         self.__mophic_col_cleanup()
 

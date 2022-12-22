@@ -16,5 +16,5 @@ class MariaDBConnector:
             port = int(os.getenv('DB_PORT')),
             database = os.getenv('DB_NAME'),
             )
-        except Error as e:
-            print(f"Error connecting to Database Platform: {e}")
+        except Exception as e:
+            raise Exception(f"Error: Cannot connect to Database: {e}")

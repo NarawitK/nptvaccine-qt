@@ -27,6 +27,8 @@ class ForeignWidget(QtWidgets.QWidget):
 
         self.__fileopen_widget = OpenSpreadSheetWidget("เลือกไฟล์กลุ่มเป้าหมายที่ดาวน์โหลดจาก MOPH-IC")
         self.__savefile_widget = SaveSpreadsheetWidget("ตำแหน่งที่ต้องการบันทึกไฟล์")
+        self.__filter_prefecture_checkbox = QtWidgets.QCheckBox("กรองที่อยู่เฉพาะ ต.กำแพงแสน อ.กำแพงแสน จ.นครปฐม")
+        self.__filter_prefecture_checkbox.setToolTip("ติ๊กเพื่อกรอง")
         self.__startdate_lbl = QtWidgets.QLabel("เลือกวันเริ่มต้น")
         self.__startdate_dp = QtWidgets.QCalendarWidget()
         self.__enddate_lbl = QtWidgets.QLabel("เลือกวันสิ้นสุด")
@@ -40,6 +42,7 @@ class ForeignWidget(QtWidgets.QWidget):
 
         self.__layout.addWidget(self.__fileopen_widget)
         self.__layout.addWidget(self.__savefile_widget)
+        self.__layout.addWidget(self.__filter_prefecture_checkbox)
         # Add Calendar Sub-Layout
         self.__startdate_layout.addWidget(self.__startdate_lbl)
         self.__startdate_layout.addWidget(self.__startdate_dp)
@@ -62,7 +65,7 @@ class ForeignWidget(QtWidgets.QWidget):
 
     @QtCore.Slot()
     def init_export(self):
-        worker = FilterWorker(self.filter_then_export, "กำลังกรอกข้อมูล ระหว่างนี้ทำงานอื่นรอไปก่อนได้เลย", "เสร็จสิ้นกระบวนการ", "เกิดข้อผิดพลาด", self.__file_path, self.__save_path)
+        worker = FilterWorker(self.filter_then_export, "กำลังกรอกข้อมูล ระหว่างนี้ทำงานอื่นรอไปก่อนได้เลย", "เสร็จสิ้นกระบวนการ", "เกิดข้อผิดพลาด", self.__file_path, self.__save_path, self.__get_filter_prefecture_checked_status())
         worker.signals.started.connect(self.start_reading)
         worker.signals.error.connect(self.finished_reading)
         worker.signals.finished.connect(self.finished_reading)
@@ -73,10 +76,10 @@ class ForeignWidget(QtWidgets.QWidget):
         start_date = self.__startdate_dp.selectedDate()
         self.__enddate_dp.setMinimumDate(start_date)
 
-    def filter_then_export(self, group_source_path, output_path):
+    def filter_then_export(self, group_source_path, output_path, filter_prefecture):
         start_date = self.__startdate_dp.selectedDate().toPython()
         end_date = self.__enddate_dp.selectedDate().toPython()
-        filter_instance = ForeignFilter(group_source_path)
+        filter_instance = ForeignFilter(group_source_path, filter_prefecture)
         with MariaDBConnector().get_instance() as connection_instance:
             hosxp_vaccinate_list = HosxpDataAccess(connection_instance).query_injection_by_visitdate(start_date,
                                                                                                      end_date)
@@ -113,3 +116,6 @@ class ForeignWidget(QtWidgets.QWidget):
             self.__export_button.setEnabled(True)
         else:
             self.__export_button.setEnabled(False)
+
+    def __get_filter_prefecture_checked_status(self):
+        return self.__filter_prefecture_checkbox.isChecked()

@@ -4,7 +4,7 @@ class HosxpDataAccess:
 
     def query_injection_by_visitdate(self, startdate, enddate):
         result_set: list = []
-        stmt = '''
+        stmt: str = '''
         SELECT CONCAT(pname, ' ', fname, ' ', lname) 'name', age, cid,
         IF(dose = 1, vaccine_name, NULL) 'vaccine_name_1', 
         IF(dose = 1, DATE(immunization_datetime), NULL) 'date_1',
@@ -15,8 +15,8 @@ class HosxpDataAccess:
         FROM coquit c 
         WHERE DATE(immunization_datetime) BETWEEN %s AND %s
         && dose IN (1, 2) 
-        && cid REGEXP '^[0,7-9]'
-        ORDER BY cid DESC;
+        && (cid REGEXP '^[0,6-8]' && citizenof <> 'ไทย') 
+        ORDER BY cid ASC;
         '''
 
         with self.__db_instance as conn:

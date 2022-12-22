@@ -9,7 +9,6 @@ data_files = [
     ('src\\config\\weekly_config.json','config'),
 	('src\\.env','.')
 ]
-
 a = Analysis(['src\\main.py'],
              pathex=[],
              binaries=[],
@@ -23,7 +22,6 @@ a = Analysis(['src\\main.py'],
              win_private_assemblies=False,
              cipher=block_cipher,
              noarchive=False)
-
 pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
 
