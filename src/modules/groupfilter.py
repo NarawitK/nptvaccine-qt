@@ -48,8 +48,8 @@ class GroupFilter():
             for vac_name in vac_types:
                 vac_alias_dict[vac_name] = vac_alias[vac_name]
             return vac_alias_dict
-        except:
-            raise Exception("No vaccine alias in current config list. Please update vaccine list in your config file.")
+        except KeyError as e:
+            raise Exception("No vaccine alias in current config list. Please update vaccine alias list in your config file. ["+ str(e) + "]")
             
 
     def export_tabular_df(self):

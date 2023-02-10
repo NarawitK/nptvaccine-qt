@@ -22,11 +22,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    size = app.primaryScreen().size()
-    app.setWindowIcon(QIcon(":/assets/icon.ico"))
+    app.setWindowIcon(QIcon("./icon.ico"))
     app.setOrganizationName("Kamphaeng Saen Hospital")
     app.setOrganizationDomain(".org")
     window = MainWindow()
+    size = app.primaryScreen().size()
     calculated_size = window.calc_screen_size(size.width(), size.height())
     window.resize(calculated_size[0], calculated_size[1])
     apply_stylesheet(app, theme='dark_amber.xml')

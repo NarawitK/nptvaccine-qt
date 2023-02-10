@@ -7,6 +7,7 @@ data_files = [
     ('src\\config\\filter_config.json','config'),
     ('src\\config\\person_type.json','config'),
     ('src\\config\\weekly_config.json','config'),
+    ('src\\assets\\icon.ico','.'),
 	('src\\.env','.')
 ]
 a = Analysis(['src\\main.py'],

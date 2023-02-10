@@ -50,5 +50,5 @@ class MainMenuTabWidget(QtWidgets.QWidget):
     def __construct_settings_tab(self):
         self.__setting_tabs = QtWidgets.QTabWidget()
         self.__setting_tabs.addTab(self.__person_type_setting_screen, constant.PERSON_TYPE_SETTING_TAB_NAME)
-        self.__setting_tabs.addTab(self.__daily_setting_screen, constant.DAILY_VACCINE_REPORT_SETTING_TAB_NAME)
-        self.__setting_tabs.addTab(self.__weekly_setting_screen, constant.WEEKLY_PERSON_VAC_REPORT_SETTING_TAB_NAME)
+        self.__setting_tabs.addTab(self.__daily_setting_screen, constant.DAILY_VACCINE_REPORT_TAB_NAME)
+        self.__setting_tabs.addTab(self.__weekly_setting_screen, constant.WEEKLY_PERSON_VAC_REPORT_TAB_NAME)

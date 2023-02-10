@@ -1,24 +1,32 @@
 {
-    "type":[
-        "บุคลากรทางการแพทย์",
-        "เจ้าหน้าที่ที่เกี่ยวข้องกับการควบคุมโรคโควิด 19 ที่มีโอกาสสัมผัสผู้ป่วย",
-        "ผู้มีอายุ 60 ปีขึ้นไป",
-        "บุคคลที่มีโรคประจำตัว",
-        "หญิงตั้งครรภ์",
-        "ประชาชนทั่วไป"
+    "type": [
+        "\u0e1a\u0e38\u0e04\u0e25\u0e32\u0e01\u0e23\u0e17\u0e32\u0e07\u0e01\u0e32\u0e23\u0e41\u0e1e\u0e17\u0e22\u0e4c",
+        "\u0e40\u0e08\u0e49\u0e32\u0e2b\u0e19\u0e49\u0e32\u0e17\u0e35\u0e48\u0e17\u0e35\u0e48\u0e40\u0e01\u0e35\u0e48\u0e22\u0e27\u0e02\u0e49\u0e2d\u0e07\u0e01\u0e31\u0e1a\u0e01\u0e32\u0e23\u0e04\u0e27\u0e1a\u0e04\u0e38\u0e21\u0e42\u0e23\u0e04\u0e42\u0e04\u0e27\u0e34\u0e14 19 \u0e17\u0e35\u0e48\u0e21\u0e35\u0e42\u0e2d\u0e01\u0e32\u0e2a\u0e2a\u0e31\u0e21\u0e1c\u0e31\u0e2a\u0e1c\u0e39\u0e49\u0e1b\u0e48\u0e27\u0e22",
+        "\u0e1c\u0e39\u0e49\u0e21\u0e35\u0e2d\u0e32\u0e22\u0e38 60 \u0e1b\u0e35\u0e02\u0e36\u0e49\u0e19\u0e44\u0e1b",
+        "\u0e1a\u0e38\u0e04\u0e04\u0e25\u0e17\u0e35\u0e48\u0e21\u0e35\u0e42\u0e23\u0e04\u0e1b\u0e23\u0e30\u0e08\u0e33\u0e15\u0e31\u0e27",
+        "\u0e2b\u0e0d\u0e34\u0e07\u0e15\u0e31\u0e49\u0e07\u0e04\u0e23\u0e23\u0e20\u0e4c",
+        "\u0e1b\u0e23\u0e30\u0e0a\u0e32\u0e0a\u0e19\u0e17\u0e31\u0e48\u0e27\u0e44\u0e1b"
     ],
     "sub_type": {
-        "บุคลากรทางการแพทย์": ["บุคลากรทางการแพทย์และสาธารณสุขภาครัฐ", "อาสาสมัครสาธารณสุขประจำหมู่บ้าน (อสม.)/ อาสาสมัครสาธารณสุขต่างด้าว (อสต.)"],
-        "ประชาชนทั่วไป": ["ประชาชนทั่วไป", "นักเรียน อายุ 12-17 ปี", "เด็ก อายุ 5-11 ปี", "เด็ก อายุ 0-4 ปี"]
+        "\u0e1a\u0e38\u0e04\u0e25\u0e32\u0e01\u0e23\u0e17\u0e32\u0e07\u0e01\u0e32\u0e23\u0e41\u0e1e\u0e17\u0e22\u0e4c": [
+            "\u0e1a\u0e38\u0e04\u0e25\u0e32\u0e01\u0e23\u0e17\u0e32\u0e07\u0e01\u0e32\u0e23\u0e41\u0e1e\u0e17\u0e22\u0e4c\u0e41\u0e25\u0e30\u0e2a\u0e32\u0e18\u0e32\u0e23\u0e13\u0e2a\u0e38\u0e02\u0e20\u0e32\u0e04\u0e23\u0e31\u0e10",
+            "\u0e2d\u0e32\u0e2a\u0e32\u0e2a\u0e21\u0e31\u0e04\u0e23\u0e2a\u0e32\u0e18\u0e32\u0e23\u0e13\u0e2a\u0e38\u0e02\u0e1b\u0e23\u0e30\u0e08\u0e33\u0e2b\u0e21\u0e39\u0e48\u0e1a\u0e49\u0e32\u0e19 (\u0e2d\u0e2a\u0e21.)/ \u0e2d\u0e32\u0e2a\u0e32\u0e2a\u0e21\u0e31\u0e04\u0e23\u0e2a\u0e32\u0e18\u0e32\u0e23\u0e13\u0e2a\u0e38\u0e02\u0e15\u0e48\u0e32\u0e07\u0e14\u0e49\u0e32\u0e27 (\u0e2d\u0e2a\u0e15.)"
+        ],
+        "\u0e1b\u0e23\u0e30\u0e0a\u0e32\u0e0a\u0e19\u0e17\u0e31\u0e48\u0e27\u0e44\u0e1b": [
+            "\u0e1b\u0e23\u0e30\u0e0a\u0e32\u0e0a\u0e19\u0e17\u0e31\u0e48\u0e27\u0e44\u0e1b",
+            "\u0e19\u0e31\u0e01\u0e40\u0e23\u0e35\u0e22\u0e19 \u0e2d\u0e32\u0e22\u0e38 12-17 \u0e1b\u0e35",
+            "\u0e40\u0e14\u0e47\u0e01 \u0e2d\u0e32\u0e22\u0e38 5-11 \u0e1b\u0e35",
+            "\u0e40\u0e14\u0e47\u0e01 \u0e2d\u0e32\u0e22\u0e38 0-4 \u0e1b\u0e35"
+        ]
     },
     "min_dose": 1,
-    "max_dose": 5,
+    "max_dose": 6,
     "vaccine_alias": {
-        "ChAdOx1nCov-19(บริษัทAstraZeneca) [AstraZeneca]": "AZ",
-        "Corona Vac (บริษัทSinovac) [Sinovac Life Sciences]": "SV",
-        "Cov-19 Pfizer (บริษัทBioNTech) [Pfizer, BioNTech]": "PZ",
+        "ChAdOx1nCov-19(\u0e1a\u0e23\u0e34\u0e29\u0e31\u0e17AstraZeneca) [AstraZeneca]": "AZ",
+        "Corona Vac (\u0e1a\u0e23\u0e34\u0e29\u0e31\u0e17Sinovac) [Sinovac Life Sciences]": "SV",
         "Cov-19 Sinopharm [Sinopharm]": "SP",
-        "Moderna [Moderna]": "MD"
+        "Moderna [Moderna]": "MD",
+        "Cov-19 Pfizer (\u0e1a\u0e23\u0e34\u0e29\u0e31\u0e17BioNTech) [Pfizer. BioNTech]": "PZ"
     },
-    "npt_url" : "https://docs.google.com/spreadsheets/d/1L5zHBL5YpbnGAoXEgzGcFW8kJx856N0n0k0_ARpdcMU/edit#gid=54268681"
+    "npt_url": "YOUR_URL"
 }
